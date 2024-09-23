@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist"   // Add this line to specify the output directory
+  },
+  "include": ["./**/*.ts"],   // Include all TypeScript files
+  "exclude": ["node_modules"] // Exclude node_modules folder
+}

@@ -1,0 +1,21 @@
+{
+  "name": "algoritma-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:q1": "npx tsc && node ./dist/question1.js",
+    "start:q2": "npx tsc && node ./dist/question2.js",
+    "start:q3": "npx tsc && node ./dist/question3.js",
+    "start:q4": "npx tsc && node ./dist/question4.js"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
