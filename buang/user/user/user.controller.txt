@@ -1,0 +1,74 @@
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Headers,
+  HttpCode,
+  HttpException,
+  Param,
+  Post,
+  Query,
+  Req,
+  Res,
+  UseFilters,
+} from '@nestjs/common';
+import { Request, Response } from 'express';
+import { UserService } from './user.service';
+import { Connection } from '../connection/connection';
+import { UserRepository } from '../user-repository/user-repository';
+import { User } from '@prisma/client';
+import { ValidationFilter } from 'src/validation/validation.filter';
+
+@Controller('/api/users')
+export class UserController {
+  constructor(
+    private readonly userService: UserService,
+    private connection: Connection,
+    private readonly userRepository: UserRepository,
+  ) {}
+
+  @Get('/connection')
+  async getConnection(@Query('name') name: Promise<string>) {
+    return this.connection.getName();
+  }
+
+  @Get('/gas')
+  @UseFilters(ValidationFilter)
+  sayHello(@Query('name') name: string) {
+    if (!name) {
+      throw new HttpException(
+        {
+          code: 400,
+          errors: {
+            message: 'First name is required',
+          },
+        },
+        400,
+      );
+    }
+    return this.userService.sayHello(name);
+  }
+
+  @Get()
+  setCookie(@Query('name') name: string, @Res() response: Response) {
+    response.cookie('name', name);
+    response.status(200).send('Sucess set Cookie');
+  }
+
+  @Get('/test-html')
+  testHtml(@Res() response: Response) {
+    response.render('index.html', {
+      title: 'Bang',
+      name: 'Cenk',
+    });
+  }
+
+  @Post()
+  async createUser(
+    @Body('firstName') firstName: string,
+    @Body('lastName') lastName: string,
+  ): Promise<User> {
+    return this.userRepository.save(firstName, lastName);
+  }
+}
